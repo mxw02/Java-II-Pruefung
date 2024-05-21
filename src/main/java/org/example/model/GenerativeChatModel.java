@@ -15,7 +15,7 @@ public class GenerativeChatModel {
     private GenerationConfig generationConfig;
     private List<SafetySetting> safetySettings;
 
-    GenerativeChatModel(String modelName, String projectID, String region) {
+    public GenerativeChatModel(String modelName, String projectID, String region) {
         this.vertexAI = new VertexAI(projectID, region);
         buildModel(modelName);
         generateGenerationConfig();
