@@ -1,66 +1,41 @@
 package org.example;
 
-import com.google.cloud.vertexai.VertexAI;
-import com.google.cloud.vertexai.api.Blob;
-import com.google.cloud.vertexai.api.Content;
 import com.google.cloud.vertexai.api.GenerateContentResponse;
-import com.google.cloud.vertexai.api.GenerationConfig;
-import com.google.cloud.vertexai.api.HarmCategory;
-import com.google.cloud.vertexai.api.Part;
-import com.google.cloud.vertexai.api.SafetySetting;
-import com.google.cloud.vertexai.generativeai.ContentMaker;
-import com.google.cloud.vertexai.generativeai.GenerativeModel;
-import com.google.cloud.vertexai.generativeai.PartMaker;
 import com.google.cloud.vertexai.generativeai.ResponseStream;
-import com.google.protobuf.ByteString;
-import java.io.File;
-import java.io.FileInputStream;
+import org.example.chat.ChatController;
+import org.example.model.GenerativeChatModel;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        try (VertexAI vertexAi = new VertexAI("dsopdjk042401-pruefung", "europe-west3"); ) {
-            GenerationConfig generationConfig =
-                    GenerationConfig.newBuilder()
-                            .setMaxOutputTokens(1246)
-                            .setTemperature(1F)
-                            .setTopP(0.95F)
-                            .build();
-            List<SafetySetting> safetySettings = Arrays.asList(
-                    SafetySetting.newBuilder()
-                            .setCategory(HarmCategory.HARM_CATEGORY_HATE_SPEECH)
-                            .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE)
-                            .build(),
-                    SafetySetting.newBuilder()
-                            .setCategory(HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT)
-                            .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE)
-                            .build(),
-                    SafetySetting.newBuilder()
-                            .setCategory(HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT)
-                            .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE)
-                            .build(),
-                    SafetySetting.newBuilder()
-                            .setCategory(HarmCategory.HARM_CATEGORY_HARASSMENT)
-                            .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE)
-                            .build()
-            );
-            GenerativeModel model =
-                    new GenerativeModel.Builder()
-                            .setModelName("gemini-1.5-flash-preview-0514")
-                            .setVertexAi(vertexAi)
-                            .setGenerationConfig(generationConfig)
-                            .setSafetySettings(safetySettings)
-                            .build();
+
+        Scanner scanner = new Scanner(System.in);
+
+        // We need the ChatController to control the Chat-Flow
+        ChatController chatController = new ChatController();
 
 
-            var content = ContentMaker.fromMultiModalData();
-            ResponseStream<GenerateContentResponse> responseStream = model.generateContentStream(content);
+        // Creates an instance of the GenerativeChatModel, so we can chat with the AI Chat Bot
+        GenerativeChatModel chatModel = new GenerativeChatModel(
+            "gemini-1.5-flash-preview-0514",
+            1246,
+            1F,
+            0.95F,
+            "dsopdjk042401-pruefung",
+            "europe-west3"
+        );
 
-            // Do something with the response
+        try {
+
+            // Generate a response with the prompt
+            System.out.println("Enter your prompt: ");
+            String prompt = scanner.nextLine();
+            ResponseStream<GenerateContentResponse> responseStream = chatModel.generateSingleResponse("Hello, how are you?");
             responseStream.stream().forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 }

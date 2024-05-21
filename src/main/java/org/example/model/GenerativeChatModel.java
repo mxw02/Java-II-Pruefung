@@ -1,10 +1,15 @@
 package org.example.model;
 
 import com.google.cloud.vertexai.VertexAI;
+import com.google.cloud.vertexai.api.GenerateContentResponse;
 import com.google.cloud.vertexai.api.GenerationConfig;
 import com.google.cloud.vertexai.api.HarmCategory;
 import com.google.cloud.vertexai.api.SafetySetting;
+import com.google.cloud.vertexai.generativeai.ContentMaker;
 import com.google.cloud.vertexai.generativeai.GenerativeModel;
+import com.google.cloud.vertexai.generativeai.ResponseStream;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,13 +20,22 @@ public class GenerativeChatModel {
     private GenerationConfig generationConfig;
     private List<SafetySetting> safetySettings;
 
-    public GenerativeChatModel(String modelName, String projectID, String region) {
+    /**
+     * Public constructor to generate a new GenerativeChatModel
+     * @param modelName The model name of the model you want to build
+     * @param projectID Your Google Cloud project ID
+     * @param region Your Google Cloud region
+     */
+    public GenerativeChatModel(String modelName, int maxTokens, float temperature, float topP, String projectID, String region) {
         this.vertexAI = new VertexAI(projectID, region);
-        buildModel(modelName);
-        generateGenerationConfig();
+        generateGenerationConfig(1246, 1F, 0.95F);
         setSafetySettings();
+        buildModel(modelName);
     }
 
+    /**
+     * @param modelName The model name of the new model you want to build
+     */
     private void buildModel(String modelName) {
         this.model = new GenerativeModel.Builder()
             .setModelName(modelName)
@@ -31,14 +45,19 @@ public class GenerativeChatModel {
             .build();
     }
 
-    private void generateGenerationConfig() {
+    // TODO: Set max.Tokens, Temp. and TopP variable
+    private void generateGenerationConfig(int maxTokens, float temperature, float topP) {
         generationConfig = GenerationConfig.newBuilder()
-            .setMaxOutputTokens(1246)
-            .setTemperature(1F)
-            .setTopP(0.95F)
+            .setMaxOutputTokens(maxTokens)
+            .setTemperature(temperature)
+            .setTopP(topP)
             .build();
     }
 
+
+    /**
+     * Generates new safety settings
+     */
     private void setSafetySettings() {
         safetySettings = Arrays.asList(
             SafetySetting.newBuilder()
@@ -60,8 +79,22 @@ public class GenerativeChatModel {
         );
     }
 
+    /**
+     * @return The GenerativeModel
+     */
     public GenerativeModel getModel() {
         return this.model;
+    }
+
+
+    /**
+     * @param prompt The prompt for the Generative Model
+     * @return The Response as ResponseStream
+     * @throws IOException when generating content stream fails
+     */
+    public ResponseStream<GenerateContentResponse> generateSingleResponse(String prompt) throws IOException {
+        var content = ContentMaker.fromString(prompt);
+        return model.generateContentStream(content);
     }
 
 }
