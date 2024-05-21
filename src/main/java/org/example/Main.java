@@ -1,6 +1,6 @@
 package org.example;
 
-import com.google.cloud.vertexai.api.GenerateContentResponse;
+import com.google.cloud.vertexai.api.*;
 import com.google.cloud.vertexai.generativeai.ResponseStream;
 import org.example.chat.ChatController;
 import org.example.model.GenerativeChatModel;
@@ -29,10 +29,20 @@ public class Main {
         try {
 
             // Generate a response with the prompt
-            System.out.println("Enter your prompt: ");
+            chatController.sendMessage("Enter your prompt: ");
             String prompt = scanner.nextLine();
+
+            // Count the total tokens
+            CountTokensResponse countTokensResponse = chatModel.countTokens(prompt);
+            chatController.sendMessage("Tokens for your prompt: " + countTokensResponse.getTotalTokens());
+
+            // Generate a response with the prompt
             ResponseStream<GenerateContentResponse> responseStream = chatModel.generateSingleResponse("Hello, how are you?");
-            responseStream.stream().forEach(System.out::println);
+
+            // We can send the async message directly to console
+            chatController.sendStreamMessage(responseStream);
+
+            //responseStream.stream().forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }

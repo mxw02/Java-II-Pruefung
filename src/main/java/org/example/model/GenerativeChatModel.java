@@ -1,10 +1,7 @@
 package org.example.model;
 
 import com.google.cloud.vertexai.VertexAI;
-import com.google.cloud.vertexai.api.GenerateContentResponse;
-import com.google.cloud.vertexai.api.GenerationConfig;
-import com.google.cloud.vertexai.api.HarmCategory;
-import com.google.cloud.vertexai.api.SafetySetting;
+import com.google.cloud.vertexai.api.*;
 import com.google.cloud.vertexai.generativeai.ContentMaker;
 import com.google.cloud.vertexai.generativeai.GenerativeModel;
 import com.google.cloud.vertexai.generativeai.ResponseStream;
@@ -86,6 +83,15 @@ public class GenerativeChatModel {
         return this.model;
     }
 
+
+    /**
+     * @param prompt The prompt you want to count tokens on
+     * @return CountTokensResponse
+     * @throws IOException When counting the tokens fails
+     */
+    public CountTokensResponse countTokens(String prompt) throws IOException {
+        return model.countTokens(prompt);
+    }
 
     /**
      * @param prompt The prompt for the Generative Model
