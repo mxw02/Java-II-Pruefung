@@ -2,6 +2,7 @@ package org.example.model;
 
 import com.google.cloud.vertexai.VertexAI;
 import com.google.cloud.vertexai.api.*;
+import com.google.cloud.vertexai.generativeai.ChatSession;
 import com.google.cloud.vertexai.generativeai.ContentMaker;
 import com.google.cloud.vertexai.generativeai.GenerativeModel;
 import com.google.cloud.vertexai.generativeai.ResponseStream;
@@ -101,6 +102,10 @@ public class GenerativeChatModel {
     public ResponseStream<GenerateContentResponse> generateSingleResponse(String prompt) throws IOException {
         var content = ContentMaker.fromString(prompt);
         return model.generateContentStream(content);
+    }
+
+    public ChatSession startChatSession() {
+        return model.startChat();
     }
 
 }

@@ -7,30 +7,34 @@ import com.google.cloud.vertexai.api.Part;
 import com.google.cloud.vertexai.generativeai.ResponseStream;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class ChatController {
 
-    public ChatController() {
+    private Scanner scanner;
 
+    public ChatController() {
+        scanner = new Scanner(System.in);
     }
 
     public void sendMessage(String message) {
         System.out.println(message);
     }
 
-    public boolean validateMessage(String message) {
-        // TODO: Implements validation
-        return true;
+    public boolean checkQuitChat(String command) {
+        return command.toUpperCase().equals("Q") ? true : false;
     }
 
-    public void handleCommand(String command) {
-        // TODO: Implements command handling
+    public String getUserResponse() {
+        System.out.println("Bitte gib deine Antwort ein: ");
+        return scanner.next();
     }
 
 
     /**
      * @param message The Stream-message you want to display in the console
      */
+    /*
     public void sendStreamMessage(ResponseStream<GenerateContentResponse> message) {
         for (GenerateContentResponse response : message) {
             if (!response.getCandidatesList().isEmpty()) {
@@ -41,6 +45,19 @@ public class ChatController {
                 String text = part.getText();
                 sendMessage(text);
             }
+        }
+    }
+
+     */
+
+    public void sendChatResponseMessage(GenerateContentResponse response) {
+        if (!response.getCandidatesList().isEmpty()) {
+            Candidate textResponse = response.getCandidatesList().getFirst();
+            Content content = textResponse.getContent();
+            List<Part> parts = content.getPartsList();
+            Part part = parts.getFirst();
+            String text = part.getText();
+            sendMessage(text);
         }
     }
 

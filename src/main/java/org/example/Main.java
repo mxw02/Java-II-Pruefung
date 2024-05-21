@@ -1,8 +1,10 @@
 package org.example;
 
 import com.google.cloud.vertexai.api.*;
+import com.google.cloud.vertexai.generativeai.ChatSession;
 import com.google.cloud.vertexai.generativeai.ResponseStream;
 import org.example.chat.ChatController;
+import org.example.information.InformationController;
 import org.example.model.GenerativeChatModel;
 import java.io.IOException;
 import java.util.Scanner;
@@ -14,6 +16,10 @@ public class Main {
 
         // We need the ChatController to control the Chat-Flow
         ChatController chatController = new ChatController();
+
+        // To onboard the player we use the InformationController
+        InformationController informationController = new InformationController();
+        informationController.sendWelcomeMessage();
 
 
         // Creates an instance of the GenerativeChatModel, so we can chat with the AI Chat Bot
@@ -28,21 +34,20 @@ public class Main {
 
         try {
 
+            // The chat session for our quiz game
+            ChatSession chatSession = chatModel.startChatSession();
+
             // Generate a response with the prompt
             chatController.sendMessage("Enter your prompt: ");
             String prompt = scanner.nextLine();
+
+            GenerateContentResponse chatResponse = chatSession.sendMessage(prompt);
+            chatController.sendChatResponseMessage(chatResponse);
 
             // Count the total tokens
             CountTokensResponse countTokensResponse = chatModel.countTokens(prompt);
             chatController.sendMessage("Tokens for your prompt: " + countTokensResponse.getTotalTokens());
 
-            // Generate a response with the prompt
-            ResponseStream<GenerateContentResponse> responseStream = chatModel.generateSingleResponse("Hello, how are you?");
-
-            // We can send the async message directly to console
-            chatController.sendStreamMessage(responseStream);
-
-            //responseStream.stream().forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
