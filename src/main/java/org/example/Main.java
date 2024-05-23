@@ -37,18 +37,21 @@ public class Main {
             // The chat session for our quiz game
             ChatSession chatSession = chatModel.startChatSession();
 
-            // Generate a response with the prompt
-            chatController.sendMessage("Enter your prompt: ");
-            String prompt = scanner.nextLine();
+            String inputtedText = "";
 
-            GenerateContentResponse chatResponse = chatSession.sendMessage(prompt);
-            chatController.sendChatResponseMessage(chatResponse);
-
-            // Count the total tokens
-            CountTokensResponse countTokensResponse = chatModel.countTokens(prompt);
-            chatController.sendMessage("Tokens for your prompt: " + countTokensResponse.getTotalTokens());
+            while(true) {
+                chatController.sendMessage("Deine Nachricht: ");
+                inputtedText = scanner.nextLine();
+                if(inputtedText.equalsIgnoreCase("Q")) {
+                    chatController.sendMessage("Beenden...");
+                    break;
+                }
+                GenerateContentResponse chatResponse = chatSession.sendMessage(inputtedText);
+                chatController.sendChatResponseMessage(chatResponse);
+            }
 
         } catch (IOException e) {
+            chatController.sendMessage("Leider ist ein Fehler aufgetreten. Bitte erneut versuchen.");
             e.printStackTrace();
         }
 

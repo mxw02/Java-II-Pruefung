@@ -18,7 +18,7 @@ public class ChatController {
     }
 
     public void sendMessage(String message) {
-        System.out.println(message);
+        System.out.print(message);
     }
 
     public boolean checkQuitChat(String command) {
