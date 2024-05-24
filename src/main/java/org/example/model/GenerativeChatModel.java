@@ -104,6 +104,10 @@ public class GenerativeChatModel {
         return model.generateContentStream(content);
     }
 
+
+    /**
+     * @return A new ChatSession for the Game
+     */
     public ChatSession startChatSession() {
         return model.startChat();
     }

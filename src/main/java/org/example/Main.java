@@ -12,19 +12,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+        // Scanner for user input
         Scanner scanner = new Scanner(System.in);
 
         // We need the ChatController to control the Chat-Flow
         ChatController chatController = new ChatController();
 
         // To onboard the player we use the InformationController
-        InformationController informationController = new InformationController();
-        informationController.sendWelcomeMessage();
+        InformationController.sendWelcomeMessage();
 
 
         // Creates an instance of the GenerativeChatModel, so we can chat with the AI Chat Bot
         GenerativeChatModel chatModel = new GenerativeChatModel(
-            "gemini-1.5-flash-preview-0514",
+            "gemini-1.0-pro-002",
             1246,
             1F,
             0.95F,
@@ -37,18 +37,33 @@ public class Main {
             // The chat session for our quiz game
             ChatSession chatSession = chatModel.startChatSession();
 
-            String inputtedText = "";
+            // Set the role of the Ai for the current chat
+            GenerateContentResponse welcomeChatResponse = chatSession.sendMessage("Der folgende Chat soll ein Quizspiel sein. Du bist der Moderator. Du stellst insgesamt 8 Fragen aus verschiedenen Kategorien und Schwierigkeitsstufen. Nach diesen 8 Fragen gibst du die erreichte Punktzahl aus. Gib nun deine Begrüßungsnachricht und die 1. Frage an.");
+            chatController.sendChatResponseMessage(welcomeChatResponse);
 
-            while(true) {
-                chatController.sendMessage("Deine Nachricht: ");
+            String inputtedText = "";
+            int questionsAnswered = 0;
+
+            // We want to play until the user has all questions answered
+            do {
+                chatController.sendMessage("\n\nDeine Antwort: ");
                 inputtedText = scanner.nextLine();
+
+                // When the users entered a 'q' we want to quit the game
                 if(inputtedText.equalsIgnoreCase("Q")) {
                     chatController.sendMessage("Beenden...");
                     break;
                 }
+
+                // Send users response and evaluate it
                 GenerateContentResponse chatResponse = chatSession.sendMessage(inputtedText);
                 chatController.sendChatResponseMessage(chatResponse);
-            }
+
+                // User has answered a question more
+                questionsAnswered++;
+            } while(questionsAnswered < 8);
+
+            InformationController.sendGameClosedMessage();
 
         } catch (IOException e) {
             chatController.sendMessage("Leider ist ein Fehler aufgetreten. Bitte erneut versuchen.");
