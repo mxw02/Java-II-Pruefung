@@ -4,7 +4,6 @@ import com.google.cloud.vertexai.api.Candidate;
 import com.google.cloud.vertexai.api.Content;
 import com.google.cloud.vertexai.api.GenerateContentResponse;
 import com.google.cloud.vertexai.api.Part;
-import com.google.cloud.vertexai.generativeai.ResponseStream;
 
 import java.util.List;
 import java.util.Scanner;

@@ -2,7 +2,6 @@ package org.example;
 
 import com.google.cloud.vertexai.api.*;
 import com.google.cloud.vertexai.generativeai.ChatSession;
-import com.google.cloud.vertexai.generativeai.ResponseStream;
 import org.example.chat.ChatController;
 import org.example.information.InformationController;
 import org.example.model.GenerativeChatModel;
