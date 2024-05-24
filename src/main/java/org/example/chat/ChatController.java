@@ -29,26 +29,6 @@ public class ChatController {
         return scanner.next();
     }
 
-
-    /**
-     * @param message The Stream-message you want to display in the console
-     */
-    /*
-    public void sendStreamMessage(ResponseStream<GenerateContentResponse> message) {
-        for (GenerateContentResponse response : message) {
-            if (!response.getCandidatesList().isEmpty()) {
-                Candidate textResponse = response.getCandidatesList().getFirst();
-                Content content = textResponse.getContent();
-                List<Part> parts = content.getPartsList();
-                Part part = parts.getFirst();
-                String text = part.getText();
-                sendMessage(text);
-            }
-        }
-    }
-
-     */
-
     public void sendChatResponseMessage(GenerateContentResponse response) {
         if (!response.getCandidatesList().isEmpty()) {
             Candidate textResponse = response.getCandidatesList().getFirst();
