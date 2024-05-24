@@ -6,13 +6,9 @@ import org.example.chat.ChatController;
 import org.example.information.InformationController;
 import org.example.model.GenerativeChatModel;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
-        // Scanner for user input
-        Scanner scanner = new Scanner(System.in);
 
         // We need the ChatController to control the Chat-Flow
         ChatController chatController = new ChatController();
