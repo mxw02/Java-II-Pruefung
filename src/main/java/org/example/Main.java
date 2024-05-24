@@ -45,11 +45,12 @@ public class Main {
 
             // We want to play until the user has all questions answered
             do {
-                chatController.sendMessage("\n\nDeine Antwort: ");
-                inputtedText = scanner.nextLine();
+
+                // Get the users input
+                inputtedText = chatController.getUserResponse();
 
                 // When the users entered a 'q' we want to quit the game
-                if(inputtedText.equalsIgnoreCase("Q")) {
+                if(chatController.checkQuitChat(inputtedText)) {
                     chatController.sendMessage("Beenden...");
                     break;
                 }

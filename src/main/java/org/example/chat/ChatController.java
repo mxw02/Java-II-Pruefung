@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ChatController {
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public ChatController() {
         scanner = new Scanner(System.in);
@@ -21,11 +21,11 @@ public class ChatController {
     }
 
     public boolean checkQuitChat(String command) {
-        return command.toUpperCase().equals("Q") ? true : false;
+        return command.equalsIgnoreCase("Q");
     }
 
     public String getUserResponse() {
-        System.out.println("Bitte gib deine Antwort ein: ");
+        sendMessage("Deine Antwort: ");
         return scanner.next();
     }
 
