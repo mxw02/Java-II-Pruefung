@@ -19,7 +19,7 @@ public class Main {
 
         // Creates an instance of the GenerativeChatModel, so we can chat with the AI Chat Bot
         GenerativeChatModel chatModel = new GenerativeChatModel(
-            "gemini-1.0-pro-002",
+            "gemini-1.5-pro-001",
             1246,
             1F,
             0.95F,
@@ -33,7 +33,8 @@ public class Main {
             ChatSession chatSession = chatModel.startChatSession();
 
             // Set the role of the Ai for the current chat
-            GenerateContentResponse welcomeChatResponse = chatSession.sendMessage("Der folgende Chat soll ein Quizspiel sein. Du bist der Moderator. Du stellst insgesamt 8 Fragen aus verschiedenen Kategorien und Schwierigkeitsstufen. Nach diesen 8 Fragen gibst du die erreichte Punktzahl aus. Gib nun deine Begrüßungsnachricht und die 1. Frage an.");
+            String modelChatInstruction = chatController.modelChatInstruction();
+            GenerateContentResponse welcomeChatResponse = chatSession.sendMessage(modelChatInstruction);
             chatController.sendChatResponseMessage(welcomeChatResponse);
 
             String inputtedText = "";

@@ -26,7 +26,7 @@ public class GenerativeChatModel {
      */
     public GenerativeChatModel(String modelName, int maxTokens, float temperature, float topP, String projectID, String region) {
         this.vertexAI = new VertexAI(projectID, region);
-        generateGenerationConfig(1246, 1F, 0.95F);
+        generateGenerationConfig();
         setSafetySettings();
         buildModel(modelName);
     }
@@ -43,12 +43,14 @@ public class GenerativeChatModel {
             .build();
     }
 
-    // TODO: Set max.Tokens, Temp. and TopP variable
-    private void generateGenerationConfig(int maxTokens, float temperature, float topP) {
+    /**
+     * Generates a new GenerationConfig
+     */
+    private void generateGenerationConfig() {
         generationConfig = GenerationConfig.newBuilder()
-            .setMaxOutputTokens(maxTokens)
-            .setTemperature(temperature)
-            .setTopP(topP)
+            .setMaxOutputTokens(1246)
+            .setTemperature((float) 1.0)
+            .setTopP((float) 0.95)
             .build();
     }
 

@@ -25,7 +25,7 @@ public class ChatController {
     }
 
     public String getUserResponse() {
-        sendMessage("Deine Antwort: ");
+        sendMessage("\nDeine Antwort: ");
         return scanner.next();
     }
 
@@ -38,6 +38,15 @@ public class ChatController {
             String text = part.getText();
             sendMessage(text);
         }
+    }
+
+    public String modelChatInstruction() {
+        return "Dieser Chat soll ein Quizspiel zwischen dir und dem Nutzer sein." +
+                "Du bist der Moderator und stellst 8 Fragen aus verschiedenen Kategorien und Schwierigkeitsstufen." +
+                "Nach diesen 8 Fragen gibst du die erreichte Punktzahl aus." +
+                "Leichte Fragen geben weniger Punkte als schwere Fragen." +
+                "Deine Fragen sollst du so formulieren, dass ich mit a, b c oder d antwort kann." +
+                "Starte jetzt mit dem Quiz.";
     }
 
 }
