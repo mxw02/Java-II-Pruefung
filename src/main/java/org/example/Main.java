@@ -60,6 +60,9 @@ public class Main {
                 questionsAnswered++;
             } while(questionsAnswered < 8);
 
+            chatController.sendMessage("Nun werden deine Antworten nochmals aufgelistet:\n");
+            chatController.printAllAnswers();
+
             InformationController.sendGameClosedMessage();
 
         } catch (IOException e) {

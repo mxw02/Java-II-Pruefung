@@ -16,7 +16,7 @@ public class InformationController {
     }
 
     public static void sendGameClosedMessage() {
-        String gameClosedMessage = "\n\nDas Spiel wurde beendet!\n\n";
+        String gameClosedMessage = "\n\nVielen Dank für das spielen!\nDas Spiel wurde beendet!\n\n";
         System.out.println(gameClosedMessage);
     }
 
