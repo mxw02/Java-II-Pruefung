@@ -8,7 +8,7 @@ import org.example.model.GenerativeChatModel;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         // We need the ChatController to control the Chat-Flow
         ChatController chatController = new ChatController();
@@ -34,14 +34,13 @@ public class Main {
             GenerateContentResponse welcomeChatResponse = chatSession.sendMessage(modelChatInstruction);
             chatController.sendChatResponseMessage(welcomeChatResponse);
 
-            String inputtedText = "";
             int questionsAnswered = 0;
 
             // We want to play until the user has all questions answered
             do {
 
                 // Get the users input
-                inputtedText = chatController.getUserResponse();
+                String inputtedText = chatController.getUserResponse();
 
                 // When the users entered a 'q' we want to quit the game
                 if(chatController.checkQuitChat(inputtedText)) {
