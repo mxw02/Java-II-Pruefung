@@ -20,9 +20,6 @@ public class Main {
         // Creates an instance of the GenerativeChatModel, so we can chat with the AI Chat Bot
         GenerativeChatModel chatModel = new GenerativeChatModel(
             "gemini-1.5-pro-001",
-            1246,
-            1F,
-            0.95F,
             "dsopdjk042401-pruefung",
             "europe-west3"
         );

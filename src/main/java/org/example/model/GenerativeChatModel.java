@@ -24,7 +24,7 @@ public class GenerativeChatModel {
      * @param projectID Your Google Cloud project ID
      * @param region Your Google Cloud region
      */
-    public GenerativeChatModel(String modelName, int maxTokens, float temperature, float topP, String projectID, String region) {
+    public GenerativeChatModel(String modelName, String projectID, String region) {
         this.vertexAI = new VertexAI(projectID, region);
         generateGenerationConfig();
         setSafetySettings();

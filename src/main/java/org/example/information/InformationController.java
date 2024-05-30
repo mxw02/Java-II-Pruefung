@@ -3,6 +3,8 @@ package org.example.information;
 public class InformationController {
 
     public static void sendWelcomeMessage() {
+
+        // TODO: Add each information into a list, iterate through each item and print it on the console.
        String welcomeMessage = "\n\nWillkommen beim interaktiven KI-gesteuerten Quizspiel!";
        System.out.println(welcomeMessage);
        String gameInstructions = "Im folgenden werden die gleich 8 Fragen aus verschiedenen Kategorien und Schwierigkeitsstufen gestellt.";
