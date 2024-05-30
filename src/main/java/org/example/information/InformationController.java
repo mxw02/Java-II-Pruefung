@@ -1,20 +1,21 @@
 package org.example.information;
 
+import java.util.List;
+
 public class InformationController {
 
-    public static void sendWelcomeMessage() {
+    public static List<String> instructions = List.of(
+            "\n\nWillkommen beim interaktiven KI-gesteuerten Quizspiel!",
+            "Im folgenden werden die gleich 8 Fragen aus verschiedenen Kategorien und Schwierigkeitsstufen gestellt.",
+            "Du gibst deine Antwort immer dann ein, wenn du an der Reihe bist. Im Anschluss an das Spiel werden dir deine erreichten Punkte angezeigt.",
+            "Das Spiel kann mit der Eingabe 'q' beendet werden",
+            "Viel Erfolg beim Spiel!\n\n"
+    );
 
-        // TODO: Add each information into a list, iterate through each item and print it on the console.
-       String welcomeMessage = "\n\nWillkommen beim interaktiven KI-gesteuerten Quizspiel!";
-       System.out.println(welcomeMessage);
-       String gameInstructions = "Im folgenden werden die gleich 8 Fragen aus verschiedenen Kategorien und Schwierigkeitsstufen gestellt.";
-       System.out.println(gameInstructions);
-       String handleInstructions = "Du gibst deine Antwort immer dann ein, wenn du an der Reihe bist. Im Anschluss an das Spiel werden dir deine erreichten Punkte angezeigt.";
-       System.out.println(handleInstructions);
-       String quitGame = "Das Spiel kann mit der Eingabe 'q' beendet werden";
-       System.out.println(quitGame);
-       String goodLuckMessage = "Viel Erfolg beim Spiel!\n\n";
-       System.out.println(goodLuckMessage);
+    public static void sendWelcomeMessage() {
+        instructions.forEach(
+            System.out::println
+        );
     }
 
     public static void sendGameClosedMessage() {
