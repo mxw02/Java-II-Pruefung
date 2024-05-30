@@ -80,11 +80,17 @@ public class ChatController {
      */
     public void sendChatResponseMessage(GenerateContentResponse response) {
         if (!response.getCandidatesList().isEmpty()) {
+            // Get the first candidate from the response
             Candidate textResponse = response.getCandidatesList().getFirst();
+            // Get the content from the candidate
             Content content = textResponse.getContent();
+            // Get the parts from the content
             List<Part> parts = content.getPartsList();
+            // Get the first part from the parts
             Part part = parts.getFirst();
+            // Get the text from the part
             String text = part.getText();
+            // Print the text
             sendMessage(text);
         }
     }
