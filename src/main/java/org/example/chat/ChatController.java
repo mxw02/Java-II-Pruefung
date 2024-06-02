@@ -62,7 +62,7 @@ public class ChatController {
      */
     public void printAllAnswers() {
         for (String answer : anwserStack) {
-            System.out.println("Antwort auf Frage " + anwserStack.indexOf(answer) + 1 + ": " + answer);
+            System.out.println("Antwort auf Frage " + (anwserStack.indexOf(answer) + 1) + ": " + answer);
         }
     }
 
